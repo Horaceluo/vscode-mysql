@@ -63,6 +63,10 @@ export class ConnectionNode implements INode {
     public async deleteConnection(context: vscode.ExtensionContext, mysqlTreeDataProvider: MySQLTreeDataProvider) {
         AppInsightsClient.sendEvent("deleteConnection");
         const connections = context.globalState.get<{ [key: string]: IConnection }>(Constants.GlobalStateMySQLConectionsKey);
+        if (this.id === "1") {
+            vscode.window.showInformationMessage("无法删除此配置");
+            return ;
+        }
         delete connections[this.id];
         await context.globalState.update(Constants.GlobalStateMySQLConectionsKey, connections);
 

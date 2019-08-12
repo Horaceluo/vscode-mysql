@@ -1,10 +1,10 @@
 "use strict";
-import * as keytarType from "keytar";
+import { KeyTar } from "./keytar";
 import * as vscode from "vscode";
 import { IConnection } from "../model/connection";
 
 export class Global {
-    public static keytar: typeof keytarType = getCoreNodeModule(`keytar`);
+    public static keytar = KeyTar;
 
     static get activeConnection(): IConnection {
         return Global._activeConnection;

@@ -7,6 +7,9 @@ import { DatabaseNode } from "./model/databaseNode";
 import { INode } from "./model/INode";
 import { TableNode } from "./model/tableNode";
 import { MySQLTreeDataProvider } from "./mysqlTreeDataProvider";
+import { IConnection } from "./model/connection";
+import { Constants } from "./common/constants";
+import { Global } from "./common/global";
 
 export function activate(context: vscode.ExtensionContext) {
     AppInsightsClient.sendEvent("loadExtension");
@@ -38,6 +41,34 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand("mysql.selectTop1000", (tableNode: TableNode) => {
         tableNode.selectTop1000();
     }));
+
+    AppInsightsClient.sendEvent("addConnection.start");
+
+    const host:string = process.env.SUPERMODEL_DB_HOST;
+    const user:string = process.env.SUPERMODEL_DB_USERNAME;
+    const password:string = process.env.SUPERMODEL_DB_PASSWORD;
+    const port:string = process.env.SUPERMODEL_DB_PORT;
+    const certPath:string = '';
+
+    let connections = context.globalState.get<{ [key: string]: IConnection }>(Constants.GlobalStateMySQLConectionsKey);
+    if (!connections) {
+        connections = {};
+    }
+
+    const id = '1';
+    connections[id] = {
+        host,
+        user,
+        port,
+        certPath,
+    };
+
+    if (password) {
+        Global.keytar.setPassword(Constants.ExtensionId, id, password);
+    }
+    context.globalState.update(Constants.GlobalStateMySQLConectionsKey, connections);
+    mysqlTreeDataProvider.refresh();
+    AppInsightsClient.sendEvent("addConnection.end");
 }
 
 export function deactivate() {
