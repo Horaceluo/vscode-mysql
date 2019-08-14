@@ -8,16 +8,18 @@ import { Utility } from "../common/utility";
 import { ColumnNode } from "./columnNode";
 import { InfoNode } from "./infoNode";
 import { INode } from "./INode";
+import * as clipboardy from "clipboardy";
+import * as copy from 'copy-text-to-clipboard';
 
 export class TableNode implements INode {
     constructor(private readonly host: string, private readonly user: string, private readonly password: string,
                 private readonly port: string, private readonly database: string, private readonly table: string,
-                private readonly certPath: string) {
+                private readonly certPath: string, private readonly tableComment: string) {
     }
 
     public getTreeItem(): vscode.TreeItem {
         return {
-            label: this.table,
+            label: this.tableComment ? `${this.tableComment} : ${this.table}` : this.table,
             collapsibleState: vscode.TreeItemCollapsibleState.Collapsed,
             contextValue: "table",
             iconPath: path.join(__filename, "..", "..", "..", "resources", "table.svg"),
@@ -61,5 +63,13 @@ export class TableNode implements INode {
         Global.activeConnection = connection;
 
         Utility.runQuery(sql, connection);
+    }
+
+    public async copyToClip() {
+        if (typeof process === 'object') {
+            clipboardy.writeSync(this.table);
+        } else {
+            copy(this.table);
+        }
     }
 }

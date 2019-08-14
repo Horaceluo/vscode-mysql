@@ -34,10 +34,16 @@ export class DatabaseNode implements INode {
             certPath: this.certPath,
         });
 
-        return Utility.queryPromise<any[]>(connection, `SELECT TABLE_NAME FROM information_schema.TABLES  WHERE TABLE_SCHEMA = '${this.database}' LIMIT ${Utility.maxTableCount}`)
+        return Utility.queryPromise<any[]>(connection, `SELECT TABLE_NAME,TABLE_COMMENT FROM information_schema.TABLES  WHERE TABLE_SCHEMA = '${this.database}' LIMIT ${Utility.maxTableCount}`)
             .then((tables) => {
-                return tables.map<TableNode>((table) => {
-                    return new TableNode(this.host, this.user, this.password, this.port, this.database, table.TABLE_NAME, this.certPath);
+                const newTables = new Array();
+                tables.forEach((value, index) => {
+                    if (value.TABLE_COMMENT) {
+                        newTables.push(value);
+                    }
+                })
+                return newTables.map<TableNode>((table) => {
+                    return new TableNode(this.host, this.user, this.password, this.port, this.database, table.TABLE_NAME, this.certPath, table.TABLE_COMMENT);
                 });
             })
             .catch((err) => {

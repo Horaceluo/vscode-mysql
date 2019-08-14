@@ -10,6 +10,7 @@ import { MySQLTreeDataProvider } from "./mysqlTreeDataProvider";
 import { IConnection } from "./model/connection";
 import { Constants } from "./common/constants";
 import { Global } from "./common/global";
+import { ColumnNode } from "./model/columnNode";
 
 export function activate(context: vscode.ExtensionContext) {
     AppInsightsClient.sendEvent("loadExtension");
@@ -40,6 +41,14 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(vscode.commands.registerCommand("mysql.selectTop1000", (tableNode: TableNode) => {
         tableNode.selectTop1000();
+    }));
+
+    context.subscriptions.push(vscode.commands.registerCommand("mysql.copyTableName", (tableNode: TableNode) => {
+        tableNode.copyToClip();
+    }));
+
+    context.subscriptions.push(vscode.commands.registerCommand("mysql.copyColumnName", (columnNote: ColumnNode) => {
+        columnNote.copyToClip();
     }));
 
     AppInsightsClient.sendEvent("addConnection.start");

@@ -77,6 +77,16 @@
                 "command": "mysql.selectTop1000",
                 "title": "Select Top 1000",
                 "category": "MySQL"
+            },
+            {
+                "command": "mysql.copyTableName",
+                "title": "copy table name",
+                "category": "MySQL"
+            },
+            {
+                "command": "mysql.copyColumnName",
+                "title": "copy column name",
+                "category": "MySQL"
             }
         ],
         "keybindings": [
@@ -133,9 +143,19 @@
                     "group": "mysql@0"
                 },
                 {
+                    "command": "mysql.copyTableName",
+                    "when": "view == mysql && viewItem == table",
+                    "group": "mysql@0"
+                },
+                {
                     "command": "mysql.refresh",
                     "when": "view == mysql && viewItem == table",
                     "group": "mysql@1"
+                },
+                {
+                    "command": "mysql.copyColumnName",
+                    "when": "view == mysql && viewItem == column",
+                    "group": "mysql@0"
                 }
             ]
         },
@@ -175,6 +195,8 @@
     "dependencies": {
         "applicationinsights": "^1.0.0",
         "asciitable": "0.0.7",
+        "clipboardy": "^2.1.0",
+        "copy-text-to-clipboard": "^2.1.0",
         "mysql": "^2.15.0",
         "uuid": "^3.1.0"
     }
