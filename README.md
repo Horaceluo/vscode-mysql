@@ -4,6 +4,8 @@
 
 根据惟快的开发特点，修改 vscode-mysql 这个插件，在连接数据库之后，看查询数据库数据，可直接将数据表名、字段名插入代码中
 
+![vscode-mysql](./vscode-mysql.gif)
+
 # 安装
 
 已构建的安装包放置于 package 目录 , 在终端执行
