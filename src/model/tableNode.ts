@@ -8,8 +8,9 @@ import { Utility } from "../common/utility";
 import { ColumnNode } from "./columnNode";
 import { InfoNode } from "./infoNode";
 import { INode } from "./INode";
+
 import * as clipboardy from "clipboardy";
-import * as copy from 'copy-text-to-clipboard';
+//import * as copy from 'copy-to-clipboard';
 
 export class TableNode implements INode {
     constructor(private readonly host: string, private readonly user: string, private readonly password: string,
@@ -66,10 +67,11 @@ export class TableNode implements INode {
     }
 
     public async copyToClip() {
-        if (typeof process === 'object') {
-            clipboardy.writeSync(this.table);
-        } else {
-            copy(this.table);
-        }
+        const editor = vscode.window.activeTextEditor;
+        const position = editor.selection.active;
+
+        editor.edit((editBuilder) => {
+            editBuilder.insert(position, this.table);
+        });
     }
 }
