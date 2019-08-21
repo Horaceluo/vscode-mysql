@@ -1,54 +1,16 @@
-# MySQL
+# 说明
 
-[![Marketplace Version](https://vsmarketplacebadge.apphb.com/version-short/formulahendry.vscode-mysql.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.vscode-mysql) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/formulahendry.vscode-mysql.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.vscode-mysql) [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/formulahendry.vscode-mysql.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.vscode-mysql) [![Build Status](https://travis-ci.org/formulahendry/vscode-mysql.svg?branch=master)](https://travis-ci.org/formulahendry/vscode-mysql)
+[源项目](https://github.com/formulahendry/vscode-mysql)
 
-MySQL management tool
+根据惟快的开发特点，修改 vscode-mysql 这个插件，在连接数据库之后，看查询数据库数据，可直接将数据表名、字段名插入代码中
 
-## Features
+# 安装
 
-* Manage MySQL Connections (support SSL connection)
-* List MySQL Servers
-* List MySQL Databases
-* List MySQL Tables
-* List MySQL Columns
-* Run MySQL Query
-
-## Usage
-
-* To add MySQL connection: in Explorer of VS Code, click "MYSQL" in the bottom left corner, then click the `+` button, then type host, user, password, port and certificate file path (optional) in the input box.
-
-![connection](images/connection.png)
-
-* To run MySQL query, open a SQL file first then:
-  * right click on the SQL file, then click `Run MySQL Query` in editor context menu (Note: you could also run the selected SQL query)
-  * or use shortcut `Ctrl+Alt+E`
-  * or press `F1` and then select/type `Run MySQL Query`
-
-![run](images/run.png)
-
-* To create a new MySQL query or change active MySQL connection (You could see active MySQL connection in status bar):
-  * right click on a MySQL server, then click `New Query`
-  * or right click on a MySQL database, then click `New Query`
-
-![newquery](images/newquery.png)
-
-## Settings
-
-* `vscode-mysql.maxTableCount`: The maximum table count shown in the tree view. (Default is **500**)
-
-## Telemetry data
-
-By default, anonymous telemetry data collection is turned on to understand user behavior to improve this extension. To disable it, update the settings.json as below:
-```json
-{
-    "vscode-mysql.enableTelemetry": false
-}
+已构建的安装包放置于 package 目录 , 在终端执行
+```
+code --install-extension package/vscode-mysql-0.4.1.vsix
 ```
 
-## Change Log
+安装完成之后，重启vs code，EXPLORER 下即可看见 MYSQL一项，默认使用环境变量连接，环境变量设置与惟快一致(SUPERMODEL_DB_NAME ....)
 
-See Change Log [here](CHANGELOG.md)
-
-## Issues
-
-Currently, the extension is in the very initial phase. If you find any bug or have any suggestion/feature request, please submit the [issues](https://github.com/formulahendry/vscode-mysql/issues) to the GitHub Repo.
+没设置环境变量的，可手动添加数据库连接信息
